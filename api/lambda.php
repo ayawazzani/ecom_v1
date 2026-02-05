@@ -52,4 +52,29 @@ $response = $kernel->handle(
     $request = Request::capture()
 )->send();
 
+/*
+|--------------------------------------------------------------------------
+| Re-route bootstrap cache to /tmp for Vercel
+|--------------------------------------------------------------------------
+*/
+// 1. إنشاء المجلدات اللازمة في الـ /tmp لأنها غير موجودة عند بدء التشغيل
+$storageDirs = [
+    '/tmp/storage/framework/views',
+    '/tmp/storage/framework/cache',
+    '/tmp/storage/framework/sessions',
+    '/tmp/bootstrap/cache',
+];
+
+foreach ($storageDirs as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+}
+
+// 2. إعادة توجيه مسارات الكاش إلى المجلد القابل للكتابة /tmp
+putenv('APP_CONFIG_CACHE=/tmp/config.php');
+putenv('APP_ROUTES_CACHE=/tmp/routes.php');
+putenv('APP_SERVICES_CACHE=/tmp/services.php');
+putenv('APP_PACKAGES_CACHE=/tmp/packages.php');
+putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 $kernel->terminate($request, $response);
