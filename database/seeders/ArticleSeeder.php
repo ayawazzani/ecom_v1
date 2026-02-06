@@ -17,7 +17,7 @@ class ArticleSeeder extends Seeder
         Article::create([
             'titre' => 'Sac de randonnée',
             'contenu' => 'Sac résistant à l’eau idéal pour la randonnée et le camping',
-            'image' => 'https://via.placeholder.com/300'
+            'image' => 'images/produit2.jpg'
         ]);
     }
 }

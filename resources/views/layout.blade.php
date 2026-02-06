@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title')</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body { padding-top: 70px; }
         .navbar { background-color: #2E7D32; }
@@ -14,33 +16,35 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{{ asset('logo.jpeg') }}" alt="CompasSport" height="40"> CompasSport
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/apropos">À propos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
     <div class="container">
-        @yield('content')
+        <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="{{ asset('images/logo.jpeg') }}" height="40"> CompasSport
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/apropos') }}">À propos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">Contact</a></li>
+            </ul>
+        </div>
     </div>
+</nav>
 
-    <footer class="text-center">
-        &copy; 2026 CompasSport - Tous droits réservés
-    </footer>
+<div class="container">
+    @yield('content')
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="text-center">
+    &copy; 2026 CompasSport - Tous droits réservés
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
