@@ -100,7 +100,8 @@
     .form-control:focus {
         background-color: #fff !important;
         border-color: #4CAF50 !important;
-        box-shadow: 0 0 0 0.25 red border-color: rgba(76, 175, 80, 0.1) !important;
+        box-shadow: 0 0 0 0.25 red 
+        border-color: rgba(76, 175, 80, 0.1) !important;
     }
 </style>
 
