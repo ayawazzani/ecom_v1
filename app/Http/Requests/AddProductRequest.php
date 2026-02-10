@@ -18,16 +18,17 @@ class AddProductRequest extends FormRequest
     /**
      * قواعد التحقق التي سيتم تطبيقها على الطلب.
      */
-    public function rules(): array
-    {
-        return [
-            'titre'       => 'required|min:5',
-            'prix'        => 'required|numeric',
-            'category_id' => 'required|exists:categories,id', // التأكد أن القسم موجود في قاعدة البيانات
-            'image'       => 'required|image|mimes:jpeg,png,jpg,webp|max:2048', 
-            'contenu'     => 'required|min:10',
-        ];
-    }
+    public function rules()
+{
+    return [
+        'titre'       => 'required|string|max:255',
+        'contenu'     => 'required|string',
+        'prix'        => 'required|numeric',
+        'category_id' => 'required|exists:categories,id',
+        'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ];
+}
+
 
     /**
      * تخصيص رسائل الخطأ باللغة العربية.
