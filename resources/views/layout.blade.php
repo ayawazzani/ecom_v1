@@ -7,6 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
         body { 
@@ -23,6 +24,10 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             padding: 12px 0;
         }
+        .navbar .badge {
+    font-size: 0.7rem;
+    padding: 0.25em 0.5em;
+}
 
         .navbar-brand {
             font-weight: 700;
@@ -107,6 +112,20 @@
                     </a>
                 </li>
                @if(Auth::check())
+               <li class="nav-item">
+    <a class="nav-link position-relative" href="{{ route('cart') }}" style="font-size:1.1rem;">
+        <i class="bi bi-cart-fill"></i> Panier
+        @php
+            $cartCount = session('cart') ? count(session('cart')) : 0;
+        @endphp
+        @if($cartCount > 0)
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ $cartCount }}
+                <span class="visually-hidden">produits dans le panier</span>
+            </span>
+        @endif
+    </a>
+</li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle fw-bold text-warning" href="#" id="mySpaceDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             My Space
@@ -157,6 +176,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
 

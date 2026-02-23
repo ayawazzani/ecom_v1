@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -94,3 +95,17 @@ Route::middleware(['useruser'])->group(function () {
 Route::get('/profile', function () { return view('profile'); })->middleware('auth');
 Route::get('/produits-solde', function () { return view('produits_solde'); })->middleware('auth');
 Route::get('/produits-solde', [ArticleController::class, 'produitsSolde'])->middleware('auth');
+Route::middleware(['auth','useruser'])->group(function() {
+    // عرض محتوى السلة
+    Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+
+    // إضافة منتج للسلة
+    Route::get('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
+
+    // تعديل كمية منتج
+    Route::post('/update-cart', [CartController::class, 'updateCart'])->name('update.cart');
+
+    // حذف منتج من السلة
+    Route::post('/remove-from-cart', [CartController::class, 'removeFromCart'])->name('remove.from.cart');
+
+});

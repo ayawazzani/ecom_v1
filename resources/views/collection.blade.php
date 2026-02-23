@@ -75,9 +75,9 @@
                             <p class="text-muted small mb-3">
                                 {{ Str::limit($article->contenu, 60) }}
                             </p>
-                            <button class="btn btn-success w-100 rounded-pill py-2 fw-bold shadow-sm buy-btn">
+                            <a href="{{ route('add.to.cart', $article->id) }}" class="btn btn-success w-100 rounded-pill py-2 fw-bold shadow-sm buy-btn">
                                 <i class="bi bi-cart-plus me-2"></i>Ajouter au panier
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

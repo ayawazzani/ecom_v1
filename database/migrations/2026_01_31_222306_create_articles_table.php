@@ -12,16 +12,26 @@ class CreateArticlesTable extends Migration
      * @return void
      */
     public function up()
-{
-    Schema::create('articles', function (Blueprint $table) {
-        $table->id();
-        $table->string('titre');
-        $table->text('contenu');
-        $table->string('image');
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->id();
+            $table->string('titre');
+            $table->text('contenu');
+            $table->string('image')->nullable();
 
+            // Foreign key vers categories
+            $table->foreignId('category_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
+            // Foreign key vers users
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

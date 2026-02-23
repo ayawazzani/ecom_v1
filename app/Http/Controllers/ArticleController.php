@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AddProductRequest;
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\Produit; // لإضافة espaceclient
 use Cloudinary\Cloudinary;
-
-
 
 class ArticleController extends Controller
 {
@@ -49,12 +46,13 @@ class ArticleController extends Controller
             $imageUrl = $result['secure_url'];
         }
 
-        // حفظ البيانات في قاعدة البيانات
+        // حفظ البيانات في قاعدة البيانات + ربط بالكاتب الحالي
         Article::create([
             'titre'       => $request->input('titre'),
             'prix'        => $request->input('prix'),
             'contenu'     => $request->input('contenu'),
             'category_id' => $request->input('category_id'),
+            'user_id'     => auth()->id(), // الربط التلقائي بالكاتب
             'image'       => $imageUrl,
         ]);
 
@@ -70,8 +68,11 @@ class ArticleController extends Controller
         $category_id = $request->query('category');
 
         $articles = $category_id
-            ? Article::where('category_id', $category_id)->paginate(6)->appends(['category' => $category_id])
-            : Article::paginate(3);
+            ? Article::where('category_id', $category_id)
+                     ->with('category', 'user') // تحميل العلاقات لتجنب N+1
+                     ->paginate(6)
+                     ->appends(['category' => $category_id])
+            : Article::with('category', 'user')->paginate(3);
 
         return view('accueil', compact('articles', 'categories'));
     }
@@ -85,8 +86,11 @@ class ArticleController extends Controller
         $category_id = $request->query('category');
 
         $articles = $category_id
-            ? Article::where('category_id', $category_id)->paginate(6)->appends(['category' => $category_id])
-            : Article::paginate(6);
+            ? Article::where('category_id', $category_id)
+                     ->with('category', 'user')
+                     ->paginate(6)
+                     ->appends(['category' => $category_id])
+            : Article::with('category', 'user')->paginate(6);
 
         return view('collection', compact('articles', 'categories'));
     }
@@ -97,7 +101,9 @@ class ArticleController extends Controller
     public function filter(Request $request)
     {
         $query = $request->input('p');
-        $articles = Article::where('titre', 'like', "%$query%")->get();
+        $articles = Article::where('titre', 'like', "%$query%")
+                           ->with('category', 'user')
+                           ->get();
         return response()->json($articles);
     }
 
@@ -106,7 +112,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::with('category', 'user')->findOrFail($id);
         return view('articles.show', compact('article'));
     }
 
@@ -115,7 +121,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::with('category', 'user')->get();
         return view('admin.articles', compact('articles'));
     }
 
@@ -125,7 +131,8 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
-        return view('articles.edit', compact('article'));
+        $categories = Category::all();
+        return view('articles.edit', compact('article', 'categories'));
     }
 
     /**
@@ -134,13 +141,13 @@ class ArticleController extends Controller
     public function update(AddProductRequest $request, $id)
     {
         $validatedData = $request->validated();
-
         $article = Article::findOrFail($id);
 
         $article->titre       = $request->input('titre');
         $article->contenu     = $request->input('contenu');
         $article->prix        = $request->input('prix');
         $article->category_id = $request->input('category_id');
+        $article->user_id     = auth()->id(); // تحديث الكاتب تلقائياً
 
         // تحديث الصورة إذا تم اختيار صورة جديدة
         if ($request->hasFile('image')) {
@@ -203,14 +210,13 @@ class ArticleController extends Controller
      */
     public function espaceclient()
     {
-        $produits = Article::where('solde', 1)->get();
+        $produits = Article::where('solde', 1)->with('category')->get();
         return view('espaceclient', compact('produits'));
     }
+
     public function produitsSolde()
-{
-    // جلب المقالات التي عليها تخفيض
-    $articles = Article::where('is_solde', 1)->get();
-    
-    return view('produits_solde', compact('articles'));
-}
+    {
+        $articles = Article::where('is_solde', 1)->with('category', 'user')->get();
+        return view('produits_solde', compact('articles'));
+    }
 }
