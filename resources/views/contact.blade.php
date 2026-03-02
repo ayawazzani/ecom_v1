@@ -5,16 +5,16 @@
 @section('content')
 <div class="container my-5">
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold" style="color: #2d5a27;">Contactez-<span style="color: #4CAF50;">nous</span></h1>
+        <h1 class="display-4 fw-bold" style="color: #2d5a27;">{{ __('Contactez-nous') }}</h1>
         <p class="text-muted mx-auto" style="max-width: 600px;">
-            Une question sur un équipement ? Une suggestion ? Notre équipe de passionnés est là pour vous répondre dans les plus brefs délais.
+            {{ __('Une question sur un équipement ? Une suggestion ? Notre équipe de passionnés est là pour vous répondre dans les plus brefs délais.') }}
         </p>
     </div>
 
     <div class="row g-5">
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px; background-color: #f8fdf8;">
-                <h3 class="h5 fw-bold mb-4" style="color: #2d5a27;">Nos Coordonnées</h3>
+                <h3 class="h5 fw-bold mb-4" style="color: #2d5a27;">{{ __('Nos Coordonnées') }}</h3>
                 
                 <div class="d-flex align-items-center mb-4">
                     <div class="icon-box me-3">
@@ -47,7 +47,7 @@
                 </div>
 
                 <hr class="my-4">
-                <h4 class="h6 fw-bold mb-3">Suivez l'aventure</h4>
+                <h4 class="h6 fw-bold mb-3">{{ __("Suivez l'aventure") }}</h4>
                 <div class="d-flex gap-2">
                     <a href="#" class="btn btn-outline-success btn-sm rounded-circle"><i class="bi bi-instagram"></i></a>
                     <a href="#" class="btn btn-outline-success btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
@@ -58,25 +58,25 @@
 
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 20px;">
-                <h3 class="h4 fw-bold mb-4">Envoyez-nous un message</h3>
+                <h3 class="h4 fw-bold mb-4">{{ __('Envoyez-nous un message') }}</h3>
                 <form action="#" method="post">
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold">Nom Complet</label>
-                            <input type="text" name="nom" class="form-control form-control-lg border-light bg-light" placeholder="Votre nom" style="border-radius: 12px; font-size: 1rem;">
+                            <label class="form-label small fw-bold">{{ __('Nom Complet') }}</label>
+                            <input type="text" name="nom" class="form-control form-control-lg border-light bg-light" placeholder="{{ __('Votre nom') }}" style="border-radius: 12px; font-size: 1rem;">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label small fw-bold">Email</label>
+                            <label class="form-label small fw-bold">{{ __('Email') }}</label>
                             <input type="email" name="email" class="form-control form-control-lg border-light bg-light" placeholder="email@exemple.com" style="border-radius: 12px; font-size: 1rem;">
                         </div>
                         <div class="col-12">
-                            <label class="form-label small fw-bold">Message</label>
-                            <textarea name="message" rows="5" class="form-control border-light bg-light" placeholder="Comment pouvons-nous vous aider ?" style="border-radius: 12px; font-size: 1rem;"></textarea>
+                            <label class="form-label small fw-bold">{{ __('Message') }}</label>
+                            <textarea name="message" rows="5" class="form-control border-light bg-light" placeholder="{{ __('Comment pouvons-nous vous aider ?') }}" style="border-radius: 12px; font-size: 1rem;"></textarea>
                         </div>
                         <div class="col-12 mt-4">
                             <button type="submit" class="btn btn-warning btn-lg px-5 text-white fw-bold shadow-sm" style="background-color: #ff9800; border: none; border-radius: 12px;">
-                                <i class="bi bi-send-fill me-2"></i> Envoyer le message
+                                <i class="bi bi-send-fill me-2"></i> {{ __('Envoyer le message') }}
                             </button>
                         </div>
                     </div>

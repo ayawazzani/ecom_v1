@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}"
+      dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,20 +102,33 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/apropos') }}">À propos</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/collection') }}">Collection</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">{{ __('Accueil') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/apropos') }}">{{ __('À propos') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/collection') }}">{{ __('Collection') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url('/contact') }}">{{ __('Contact') }}</a></li>
                 
                 <li class="nav-item">
                     <a class="nav-link nav-api-client" href="https://react-client-six-omega.vercel.app" target="_blank">
-                        API Client
+                        {{ __('API Client') }}
                     </a>
                 </li>
+                
+                {{-- Language Dropdown --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-globe"></i> {{ strtoupper(app()->getLocale()) }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="langDropdown">
+                        <li><a class="dropdown-item @if(app()->getLocale() == 'ar') active @endif" href="{{ route('lang.switch', 'ar') }}">العربية</a></li>
+                        <li><a class="dropdown-item @if(app()->getLocale() == 'en') active @endif" href="{{ route('lang.switch', 'en') }}">English</a></li>
+                        <li><a class="dropdown-item @if(app()->getLocale() == 'fr') active @endif" href="{{ route('lang.switch', 'fr') }}">Français</a></li>
+                    </ul>
+                </li>
+
                @if(Auth::check())
                <li class="nav-item">
     <a class="nav-link position-relative" href="{{ route('cart') }}" style="font-size:1.1rem;">
-        <i class="bi bi-cart-fill"></i> Panier
+        <i class="bi bi-cart-fill"></i> {{ __('Panier') }}
         @php
             $cartCount = session('cart') ? count(session('cart')) : 0;
         @endphp
@@ -128,36 +142,36 @@
 </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle fw-bold text-warning" href="#" id="mySpaceDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            My Space
+            {{ __('My Space') }}
         </a>
         <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="mySpaceDrop">
-            <li><h6 class="dropdown-header text-dark">Salut, {{ Auth::user()->name }}</h6></li>
+            <li><h6 class="dropdown-header text-dark">{{ __('Salut') }}, {{ Auth::user()->name }}</h6></li>
             
             {{-- التحقق من الـ Role الموجود في قاعدة البيانات --}}
             @if(Auth::user()->role === 'admin')
                 <li><hr class="dropdown-divider"></li>
-                <li class="dropdown-header fw-bold text-danger">ESPACE ADMIN</li>
-                <li><a class="dropdown-item" href="{{ url('/admin/articles') }}">📋 Gestion des produits</a></li>
-                <li><a class="dropdown-item" href="{{ url('/admin/add-article') }}">➕ Ajouter produit</a></li>
+                <li class="dropdown-header fw-bold text-danger">{{ __('ESPACE ADMIN') }}</li>
+                <li><a class="dropdown-item" href="{{ url('/admin/articles') }}">📋 {{ __('Gestion des produits') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/admin/add-article') }}">➕ {{ __('Ajouter produit') }}</a></li>
             @else
                 {{-- إذا لم يكن أدمن، يظهر كـ User عادي --}}
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{{ url('/produits-solde') }}">🏷️ Produits en solde</a></li>
-                <li><a class="dropdown-item" href="{{ url('/profile') }}">👤 Mon Profil</a></li>
+                <li><a class="dropdown-item" href="{{ url('/produits-solde') }}">🏷️ {{ __('Produits en solde') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/profile') }}">👤 {{ __('Mon Profil') }}</a></li>
             @endif
 
             <li><hr class="dropdown-divider"></li>
             <li>
                 <form action="{{ route('logout') }}" method="POST" class="px-3">
                     @csrf
-                    <button type="submit" class="btn btn-sm btn-danger w-100 rounded-pill">Déconnexion</button>
+                    <button type="submit" class="btn btn-sm btn-danger w-100 rounded-pill">{{ __('Déconnexion') }}</button>
                 </form>
             </li>
         </ul>
     </li>
 @else
-    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Se connecter</a></li>
-    <li class="nav-item"><a class="nav-link btn-register" href="{{ route('register') }}">S'inscrire</a></li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('Se connecter') }}</a></li>
+    <li class="nav-item"><a class="nav-link btn-register" href="{{ route('register') }}">{{ __("S'inscrire") }}</a></li>
 @endif
 
             </ul>
@@ -171,7 +185,7 @@
 
 <footer class="text-center">
     <div class="container">
-        <p class="mb-0">&copy; 2026 <strong>CompasSport</strong> - Tous droits réservés</p>
+        <p class="mb-0">&copy; 2026 <strong>CompasSport</strong> - {{ __('Tous droits réservés') }}</p>
     </div>
 </footer>
 

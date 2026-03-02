@@ -5,6 +5,10 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LanguageController;
+
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
+
 
 
 /*

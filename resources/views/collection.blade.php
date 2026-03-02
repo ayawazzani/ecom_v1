@@ -6,18 +6,18 @@
 <div class="container my-5">
     <div class="row align-items-end mb-5">
         <div class="col-md-8">
-            <h1 class="fw-bold display-5" style="color: #2d5a27;">Notre <span style="color: #4CAF50;">Collection</span></h1>
-            <p class="text-muted lead">Équipez-vous pour l'aventure avec nos produits sélectionnés pour leur qualité.</p>
+            <h1 class="fw-bold display-5" style="color: #2d5a27;">{{ __('Notre') }} <span style="color: #4CAF50;">{{ __('Collection') }}</span></h1>
+            <p class="text-muted lead">{{ __("Équipez-vous pour l'aventure avec nos produits sélectionnés pour leur qualité.") }}</p>
         </div>
         <div class="col-md-4 text-md-end">
             <div class="dropdown">
                 <button class="btn btn-light shadow-sm dropdown-toggle rounded-pill px-4" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-sort-down me-2"></i>Trier par
+                    <i class="bi bi-sort-down me-2"></i>{{ __('Trier par') }}
                 </button>
                 <ul class="dropdown-menu border-0 shadow">
-                    <li><a class="dropdown-item" href="#">Prix croissant</a></li>
-                    <li><a class="dropdown-item" href="#">Prix décroissant</a></li>
-                    <li><a class="dropdown-item" href="#">Nouveautés</a></li>
+                    <li><a class="dropdown-item" href="#">{{ __('Prix croissant') }}</a></li>
+                    <li><a class="dropdown-item" href="#">{{ __('Prix décroissant') }}</a></li>
+                    <li><a class="dropdown-item" href="#">{{ __('Nouveautés') }}</a></li>
                 </ul>
             </div>
         </div>
@@ -27,12 +27,12 @@
         <div class="col-lg-3 d-none d-lg-block">
             <div class="sticky-top" style="top: 100px; z-index: 10;">
                 <div class="card border-0 shadow-sm p-4" style="border-radius: 20px;">
-                    <h5 class="fw-bold mb-4"><i class="bi bi-filter-left me-2"></i>Filtres</h5>
+                    <h5 class="fw-bold mb-4"><i class="bi bi-filter-left me-2"></i>{{ __('Filtres') }}</h5>
                     
-                    <label class="fw-bold small text-uppercase mb-3">Catégories</label>
+                    <label class="fw-bold small text-uppercase mb-3">{{ __('Catégories') }}</label>
                     <div class="d-flex flex-column gap-2 mb-4">
                         <a href="{{ route('collection.index') }}" class="filter-link {{ request('category') ? '' : 'active' }}">
-                            Tout Voir
+                            {{ __('Tout Voir') }}
                         </a>
                         @foreach($categories as $cat)
                             <a href="{{ route('collection.index', ['category' => $cat->id]) }}"
@@ -42,7 +42,7 @@
                         @endforeach
                     </div>
 
-                    <label class="fw-bold small text-uppercase mb-3">Budget (MAD)</label>
+                    <label class="fw-bold small text-uppercase mb-3">{{ __('Budget (MAD)') }}</label>
                     <input type="range" class="form-range custom-range" min="0" max="2000" id="priceRange">
                     <div class="d-flex justify-content-between small text-muted mt-2">
                         <span>0 MAD</span>
@@ -76,7 +76,7 @@
                                 {{ Str::limit($article->contenu, 60) }}
                             </p>
                             <a href="{{ route('add.to.cart', $article->id) }}" class="btn btn-success w-100 rounded-pill py-2 fw-bold shadow-sm buy-btn">
-                                <i class="bi bi-cart-plus me-2"></i>Ajouter au panier
+                                <i class="bi bi-cart-plus me-2"></i>{{ __('Ajouter au panier') }}
                             </a>
                         </div>
                     </div>
